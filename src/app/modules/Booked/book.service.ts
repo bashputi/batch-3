@@ -10,7 +10,7 @@ import { calculationTotalDurationTime } from "./book.utlils";
 
 
 interface TBooked extends Document {
-    cardId: mongoose.Types.ObjectId;
+    carId: mongoose.Types.ObjectId;
     user?: mongoose.Types.ObjectId;
     [key: string]: any;
 };
@@ -26,7 +26,7 @@ const newBookedIntoDB = async (
     const newuser = filterLoginUser._id;
     payload.user = newuser as mongoose.Types.ObjectId;
 
-    const filterCar = await Car.findOne({ _id: payload.carTd });
+    const filterCar = await Car.findOne({ _id: payload.carId });
     if(!filterCar) {
         throw new AppError(httpStatus.NOT_FOUND, "car not found");
     }
@@ -72,7 +72,7 @@ const getMyBookedFromDB = async (email: string) => {
     }
 
     const userId = filter._id;
-    const result = await Booked.find({ user: userId }).populate("card").populate("user");
+    const result = await Booked.find({ user: userId }).populate("carId").populate("user");
     if(!result) {
         throw new AppError(httpStatus.NOT_FOUND, "No data Found");
     }

@@ -20,7 +20,7 @@ const getAllOrders = catchAsync(async (req, res) => {
     sendResponce(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Cars retrived successfully",
+        message: "Bookings retrived successfully",
         data: result,
     });
 });
@@ -31,7 +31,7 @@ const getSingleOrder = catchAsync(async (req, res) => {
     sendResponce(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Cars retrived successfully",
+        message: "Booking retrived successfully",
         data: result,
     });
 });
@@ -55,7 +55,7 @@ const returnBooked = catchAsync(async (req, res) => {
     sendResponce(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Car booked successfully",
+        message: "Booking returned successfully",
         data: result,
     });
 })
