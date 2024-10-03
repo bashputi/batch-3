@@ -4,7 +4,7 @@ export type TCar = {
     type: string;
     description: string;
     color: string;
-    isElectric: boolean;
+    isElectric: string;
     features: string[];
     image: string;
     status?: 'available' | 'unavailable';

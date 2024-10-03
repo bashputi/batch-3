@@ -7,7 +7,7 @@ const carSchema = new Schema<TCar>(
         type: { type: String, required: true },
         description: { type: String, required: true },
         color: { type: String, required: true },
-        isElectric: { type: Boolean, required: true },
+        isElectric: { type: String, required: true },
         features: { type: [String], required: true },
         image: { type: String, required: true },
         pricePerHour: { type: Number },

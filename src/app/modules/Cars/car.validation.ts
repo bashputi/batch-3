@@ -6,14 +6,14 @@ const createCarValidationSchema = z.object({
         name: z.string({ required_error: "Name is required" }),
         type: z.string({ required_error: "Type is required" }),
         description: z.string({ required_error: "Description is required" }),
-        color: z.string({ required_error: "Description is required" }),
-        isElectric: z.boolean({ required_error: "Description is required" }),
+        color: z.string({ required_error: "Color is required" }),
+        isElectric: z.boolean({ required_error: "isElectric is required" }),
         status: z.enum(["available", "unavailable"]).optional(),
-        features: z.array(z.string({ required_error: "Description is required" })),
+        features: z.array(z.string({ required_error: "Features is required" })),
         image: z.string({ required_error: "Image is required" }),
-        pricePerHour: z.number({ required_error: "Description is required" }),
+        pricePerHour: z.number({ required_error: "Price Per Hour is required" }),
         isDeleted: z
-          .boolean({ required_error: "Description is required" })
+          .boolean({ required_error: "isDeleted is required" })
           .optional(), 
     }),
 });
@@ -25,20 +25,20 @@ const updateCarValidationSchema = z.object({
         description: z
           .string({ required_error: "Description is required" })
           .optional(),
-        color: z.string({ required_error: "Description is required" }).optional(),
+        color: z.string({ required_error: "Color is required" }).optional(),
         isElectric: z
-          .boolean({ required_error: "Description is required" })
+          .boolean({ required_error: "isElectrict is required" })
           .optional(),
         status: z.enum(["available", "unavailable"]).optional(),
         features: z
-          .array(z.string({ required_error: "Description is required" }))
+          .array(z.string({ required_error: "Features is required" }))
           .optional(),
         image: z.string({ required_error: "Image is required" }).optional(),
         pricePerHour: z
-          .number({ required_error: "Description is required" })
+          .number({ required_error: "Price Per Hour is required" })
           .optional(),
         isDeleted: z
-          .boolean({ required_error: "Description is required" })
+          .boolean({ required_error: "isDeleted is required" })
           .optional(),
       }),
 })

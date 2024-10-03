@@ -8,6 +8,7 @@ import AppError from '../../Error/AppError';
 
 
 const createACar = catchAsync(async (req, res) => {
+    
     const result = await CarService.createCar(req.body);
     sendResponce(res, {
         statusCode: 201,
@@ -19,7 +20,6 @@ const createACar = catchAsync(async (req, res) => {
 
 const getAllCars = catchAsync(async (req, res) => {
     const { search = '', type= '', sortByPrice = 'asc', page = 1, limit = 8 } = req.query;
-   
     const result = await CarService.GetAllCar(
         search as string,
         type as string,
@@ -42,6 +42,7 @@ const getAllCars = catchAsync(async (req, res) => {
 
 const getCar = catchAsync(async (req, res) => {
     const { id } = req.params;
+ 
     const result = await CarService.getSingleCar(id);
     sendResponce(res, {
         statusCode: httpStatus.OK,

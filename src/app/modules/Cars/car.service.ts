@@ -12,7 +12,6 @@ const createCar = async (payload: TCar) => {
 
 const GetAllCar = async (search: string, type: string, sortByPrice: 'asc' | 'desc' = 'asc', page: number = 1, limit: number = 10) => {
     const query: any = {};
-    
     if(search) {
         query.$or = [
             { name: { $regex: search, $options: 'i' }},
@@ -29,7 +28,7 @@ const GetAllCar = async (search: string, type: string, sortByPrice: 'asc' | 'des
 
     const cars = await Car.find(query)
     .sort(sortOption)
-    .select('id name type color price')
+    .select('id image name pricePerHour status type color price')
     .skip(skip).limit(limit);
 
     if(!cars) {
@@ -48,6 +47,7 @@ const GetAllCar = async (search: string, type: string, sortByPrice: 'asc' | 'des
 
 const getSingleCar = async (id: string) => {
     const result = await Car.findById(id);
+  
     if(!result) {
         throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
     }
@@ -55,10 +55,12 @@ const getSingleCar = async (id: string) => {
 };
 
 const updateCar = async (id: string, payload: Partial<TCar>) => {
+   
     const result = await Car.findByIdAndUpdate(id, payload, {
         new: true,
         runValidators: true,
     });
+
     if(!result) {
         throw new AppError(httpStatus.NOT_FOUND, "No Data Found");
     }
@@ -67,7 +69,7 @@ const updateCar = async (id: string, payload: Partial<TCar>) => {
 
 const deleteCar = async (id: string, payload: Partial<TCar>) => {
     const result = await Car.findByIdAndUpdate(id, {
-        isDelete: true,
+        isDeleted: true,
         new: true,
         runValidators: true,
     });
