@@ -24,7 +24,9 @@ export interface TUser {
     token: string;
 }
 
-export interface TUserDocument extends TUser, Document {}
+export interface TUserDocument extends TUser, Document {
+    _id: any;
+}
 
 export interface UserModel extends Model<TUserDocument> {
     updatePassword(id: string, password: string): unknown;

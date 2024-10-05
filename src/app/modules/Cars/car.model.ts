@@ -32,4 +32,4 @@ carSchema.pre("findOne", function (next) {
     next();
 });
 
-export const Car = model<TCar>("car", carSchema);
+export const Car = model<TCar>("Car", carSchema);

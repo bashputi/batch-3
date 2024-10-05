@@ -14,11 +14,11 @@ const bookingFormSchema = new Schema<TBookingForm>({
 const bookedSchema = new Schema<TBook>(
   {
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
     },
-    carId: { type: Schema.Types.ObjectId, ref: "Car" },
+    carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car" },
     products: { type: String },
     totalCost: { type: Number, default: 0 },
     status: { type: String, default: "Pending" },

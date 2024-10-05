@@ -34,6 +34,8 @@ const loginUser = async (payload: TUserLogin) => {
       role: user.role,
       name: user.name,
       phone: user.phone,
+      address: user.address,
+      _id: user._id
     };
 
     const accessToken = accesstoken(

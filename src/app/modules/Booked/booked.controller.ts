@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utilits/catchAsync";
 import sendResponce from "../../utilits/sendResponce";
 import { BookedService } from "./book.service";
+import { user_role } from "../Auth/auth.constant";
 
 
 const newBooked = catchAsync(async (req, res) => {
@@ -38,7 +39,9 @@ const getSingleOrder = catchAsync(async (req, res) => {
 
 const getMyOrder = catchAsync(async (req, res) => {
     const { email } = req.user;
+   
     const result = await BookedService.getMyBookedFromDB(email);
+   
     sendResponce(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -91,6 +94,6 @@ export const BookedController = {
     returnBooked,
     deleteBooked,
     updateBooked,
-    
+
 
 }

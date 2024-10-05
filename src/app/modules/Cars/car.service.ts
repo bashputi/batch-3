@@ -1,5 +1,5 @@
 
-import { TCar, TCarA } from "./car.interfase";
+import { TCar} from "./car.interfase";
 import { Car } from "./car.model";
 import httpStatus from 'http-status';
 import AppError from '../../Error/AppError';
@@ -54,7 +54,7 @@ const getSingleCar = async (id: string) => {
     return result;
 };
 
-const updateCar = async (id: string, payload: Partial<TCarA>) => {
+const updateCar = async (id: string, payload: Partial<TCar>) => {
    
     const result = await Car.findByIdAndUpdate(id, payload, {
         new: true,

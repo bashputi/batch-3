@@ -18,6 +18,6 @@ router.post(
 
 router.get('/', auth(user_role.admin), BookedController.getAllOrders);
 router.get('/my-bookings', auth(user_role.user), BookedController.getMyOrder);
-
+router.delete("/:bookedId", auth(user_role.user), BookedController.deleteBooked);
 
 export const BookedRoute = router;

@@ -43,9 +43,8 @@ const newBookedIntoDB = async (
         }
     );
 
-    const result = (
-        await (await Booked.create(payload)).populate("user")
-    ).populate("carId");
+    const result =  (await Booked.create(payload)).populate("user")
+    
     return result;
 };
 
@@ -67,11 +66,13 @@ const getSingleBookedFromDB = async (id: string) => {
 
 const getMyBookedFromDB = async (email: string) => {
     const filter = await User.findOne({ email });
+    
     if(!filter) {
         throw new AppError(httpStatus.NOT_FOUND, "User not Found");
     }
 
     const userId = filter._id;
+
     const result = await Booked.find({ user: userId }).populate("carId").populate("user");
     if(!result) {
         throw new AppError(httpStatus.NOT_FOUND, "No data Found");
