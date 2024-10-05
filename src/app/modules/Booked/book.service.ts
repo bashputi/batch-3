@@ -28,7 +28,7 @@ const newBookedIntoDB = async (
 
     const filterCar = await Car.findOne({ _id: payload.carId });
     if(!filterCar) {
-        throw new AppError(httpStatus.NOT_FOUND, "car not found");
+        throw new AppError(httpStatus.NOT_FOUND, "Car not found");
     }
 
     const { _id } = filterCar;
@@ -84,46 +84,48 @@ const returnBookedIntoDB = async (id: string, payload: Record<string, unknown>) 
 
     try {
         session.startTransaction();
-        const { bookingId } = payload;
-        const findBook = await Booked.findOne({ _id: bookingId });
+
+        const { bookingId, endTime } = payload as {
+            bookingId: string;
+            endTime: string;
+        };
+        const findBook = await Booked.findOne({ _id: bookingId }).session(session);
         if(!findBook) {
             throw new AppError(httpStatus.NOT_FOUND, "Bookings are not Found");
         }
+        const startTime = findBook.payment.startTime;
+        const { carId, date } = findBook;
 
-        const { carId } = findBook;
+        const startDateTime = new Date(startTime);
+        const endDateTime = new Date(endTime);
 
         const findCar = await Car.findByIdAndUpdate(
             { _id: carId },
             { status: "available" },
-            { new: true, runValidators: true }
+            { new: true, runValidators: true, session }
         );
         if (!findCar) {
             throw new AppError(httpStatus.NOT_FOUND, "Bookings are not Found");
         }
 
         const { pricePerHour } = findCar;
-        const filterBooked = await Booked.findByIdAndUpdate(id, payload, session);
-
-        if(!filterBooked) {
-            throw new AppError(httpStatus.NOT_FOUND, "Bookings are not Found");
-        }
-        const { startTime, endTime } = filterBooked;
 
         const filterTotalCost = calculationTotalDurationTime(
-            startTime,
-            endTime as string,
-            pricePerHour,
+            startDateTime.toISOString(),
+            endDateTime.toISOString(),
+            pricePerHour
         );
+        payload.totalCost = filterTotalCost?.toFixed(2);
 
-        payload.totalCost = filterTotalCost;
-        const result = await Booked.findByIdAndUpdate(id, payload, {
+        const filterBooked = await Booked.findByIdAndUpdate(id, payload, {
             new: true,
             runValidators: true,
-        }).populate("user").populate("carId");
+            session
+        }).populate('user').populate('carId');
 
         await session.commitTransaction();
         await session.endSession();
-        return result;
+        return filterBooked;
 
     } catch (error) {
         await session.abortTransaction();
@@ -132,6 +134,23 @@ const returnBookedIntoDB = async (id: string, payload: Record<string, unknown>) 
     }
 };
 
+const deleteBooked = async (id: string) => {
+    const result = await Booked.deleteOne({ _id: id });
+    return result;
+};
+
+const updateBooked = async (id: string) => {
+    const result = await Booked.findByIdAndUpdate(
+        id,
+        {
+            isBooked: "confirmed"
+        },
+        {
+            new: true, runValidators: true
+        }
+    );
+    return result;
+}
 
 
 export const BookedService = {
@@ -140,4 +159,7 @@ export const BookedService = {
     getSingleBookedFromDB,
     getMyBookedFromDB,
     returnBookedIntoDB,
+    deleteBooked,
+    updateBooked,
+    
 };

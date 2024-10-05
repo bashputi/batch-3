@@ -11,3 +11,15 @@ export type TCar = {
     pricePerHour: number;
     isDeleted?: boolean;
 };
+export type TCarA = {
+    name?: string;
+    type?: string;
+    description?: string;
+    color?: string;
+    isElectric?: string;
+    features: string[];
+    image?: string;
+    status?: 'available' | 'unavailable';
+    pricePerHour: number;
+    isDeleted?: boolean;
+};

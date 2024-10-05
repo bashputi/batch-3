@@ -54,6 +54,7 @@ const getCar = catchAsync(async (req, res) => {
 
 const updateACar = catchAsync(async (req, res) => {
     const { id } = req.params;
+    console.log(req.body)
     const result = await CarService.updateCar(id, req.body);
     sendResponce(res, {
         statusCode: httpStatus.OK,

@@ -1,5 +1,4 @@
 import httpStatus from "http-status";
-import config from "../../config";
 import catchAsync from "../../utilits/catchAsync";
 import sendResponce from "../../utilits/sendResponce";
 import { AuthService } from "./auth.service";
