@@ -56,10 +56,47 @@ const userResetPassword = catchAsync(async (req, res) => {
     });
 });
 
+const getAllUser = catchAsync(async (req, res) => {
+    const result = await AuthService.getAllUser();
+
+    sendResponce(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'All user retrived successfully!',
+        data: result,
+    });
+});
+
+const getSingleuser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const result = await AuthService.getSingleUser(userId);
+
+    sendResponce(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'All users are retrived successfully!',
+        data: result,
+    });
+});
+
+const updateSingleUser = catchAsync(async (req, res) => {
+    const { userId } = req.params;
+    const result = await AuthService.updateUser(userId, req.body);
+
+    sendResponce(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User update successfully!',
+        data: result,
+    });
+});
 
 export const AuthControllers = {
     registerUser,
     userLogin,
     userForgetPassword,
     userResetPassword,
+    getAllUser,
+    getSingleuser,
+    updateSingleUser,
 }

@@ -22,6 +22,7 @@ export interface TUser {
     phone: string;
     address: string;
     token: string;
+    status?: ["Block" | "Active"];
 }
 
 export interface TUserDocument extends TUser, Document {

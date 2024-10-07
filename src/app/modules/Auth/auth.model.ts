@@ -17,6 +17,9 @@ const UserSchema = new Schema<TUser, UserModel>(
     },
     phone: { type: String, required: true },
     address: { type: String, required: true },
+    status: {
+      type: String, enum: ["Block", "Active"], default: "Active"
+    }
   },
   { timestamps: true }
 );

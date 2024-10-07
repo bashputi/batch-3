@@ -115,9 +115,30 @@ const userPasswordReset = async (payload: { id: string; token: string; password:
 
 };
 
+const getAllUser = async () => {
+    const result = await User.find();
+    return result;
+};
+
+const getSingleUser = async (id: string) => {
+    const result = await User.findById(id);
+    return result;
+};
+
+const updateUser = async ( id: string, payload: TUser ) => {
+    const result = await User.findByIdAndUpdate(id, payload, {
+        new: true,
+        runValidators: true,
+    })
+    return result;
+}
+
 export const AuthService = {
     register,
     loginUser,
     forgetPassword,
     userPasswordReset,
-}
+    getAllUser,
+    getSingleUser,
+    updateUser,
+};
