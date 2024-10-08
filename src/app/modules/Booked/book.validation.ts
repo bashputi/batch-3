@@ -27,7 +27,7 @@ const newBookedValidationSchema = z.object({
         carId: z.string(),
         endTime: timeSchema.optional(),
         totalCost: z.number().optional(),
-        isBooked: z.enum(["unconfirmed", "confirmed"]).optional(),
+        isBooked: z.enum(["unconfirmed", "confirmed", "canceled"]).optional(),
     }),
 });
 
@@ -39,7 +39,7 @@ const updateBookedValidationSchema = z.object({
         startTime: timeSchema.optional(),
         endTime: timeSchema,
         totalCost: z.number().optional(),
-        isBooked: z.enum(["unconfirmed", "confirmed"]).optional(),
+        isBooked: z.enum(["unconfirmed", "confirmed", "canceled"]).optional(),
         payment: BookingFromSchema,
     }),
 });

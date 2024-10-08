@@ -13,8 +13,6 @@ const router = Router();
 router.post("/", auth(user_role.admin), validationRequest(CarValidation.createCarValidationSchema), CarController.createACar);
 router.get("/:id", CarController.getCar);
 
-router.put("/return", auth(user_role.admin), validationRequest(CarValidation.updateCarValidationSchema), BookedController.returnBooked);
-
 router.patch("/:id", auth(user_role.admin), validationRequest(CarValidation.updateCarValidationSchema), CarController.updateACar);
 router.delete("/:id", auth(user_role.admin), validationRequest(CarValidation.updateCarValidationSchema), CarController.deleteACar);
 router.get("/", CarController.getAllCars);

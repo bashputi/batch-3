@@ -20,7 +20,7 @@ export type TBook = {
     paymentStatus?: 'Pending' | 'Paid';
     transactionId?: string;
     endTime?: string;
-    isBooked?: "unconfirmed" | "confirmed";
+    isBooked?: "unconfirmed" | "confirmed" | "canceled";
     isDeleted?: boolean;
     payment: TBookingForm;
 }

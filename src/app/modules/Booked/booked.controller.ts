@@ -73,12 +73,23 @@ const deleteBooked = catchAsync(async (req, res) => {
 });
 
 const updateBooked = catchAsync(async (req, res) => {
-    const { bookedId } = req.params;
-    const result = await BookedService.updateBooked(bookedId);
+    const { bookingId } = req.params;
+    const result = await BookedService.updateBooked(bookingId);
     sendResponce(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: "Booking is updated successfully",
+        data: result,
+    });
+});
+
+const cancelBooked = catchAsync(async (req, res) => {
+    const { bookingId } = req.params;
+    const result = await BookedService.canceledBooked(bookingId);
+    sendResponce(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Booking is canceled!",
         data: result,
     });
 });
@@ -94,6 +105,7 @@ export const BookedController = {
     returnBooked,
     deleteBooked,
     updateBooked,
+    cancelBooked
 
 
 }

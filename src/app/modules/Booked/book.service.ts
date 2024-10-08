@@ -10,7 +10,7 @@ import { calculationTotalDurationTime } from "./book.utlils";
 
 
 interface TBooked extends Document {
-    carId: mongoose.Types.ObjectId;
+    carId?: mongoose.Types.ObjectId;
     user?: mongoose.Types.ObjectId;
     [key: string]: any;
 };
@@ -91,6 +91,7 @@ const returnBookedIntoDB = async (id: string, payload: Record<string, unknown>) 
             endTime: string;
         };
         const findBook = await Booked.findOne({ _id: bookingId }).session(session);
+       
         if(!findBook) {
             throw new AppError(httpStatus.NOT_FOUND, "Bookings are not Found");
         }
@@ -116,7 +117,7 @@ const returnBookedIntoDB = async (id: string, payload: Record<string, unknown>) 
             endDateTime.toISOString(),
             pricePerHour
         );
-        payload.totalCost = filterTotalCost?.toFixed(2);
+ 
 
         const filterBooked = await Booked.findByIdAndUpdate(id, payload, {
             new: true,
@@ -153,6 +154,19 @@ const updateBooked = async (id: string) => {
     return result;
 }
 
+const canceledBooked = async (id: string) => {
+    const result = await Booked.findByIdAndUpdate(
+        id,
+        {
+            isBooked: "canceled"
+        },
+        {
+            new: true, runValidators: true
+        }
+    );
+    return result;
+}
+
 
 export const BookedService = {
     newBookedIntoDB,
@@ -162,5 +176,8 @@ export const BookedService = {
     returnBookedIntoDB,
     deleteBooked,
     updateBooked,
+    canceledBooked
+
+
     
 };

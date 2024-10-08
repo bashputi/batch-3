@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import { TCar } from "./car.interfase";
 
 const carSchema = new Schema<TCar>(
@@ -32,4 +32,4 @@ carSchema.pre("findOne", function (next) {
     next();
 });
 
-export const Car = model<TCar>("Car", carSchema);
+export const Car = mongoose.model<TCar>("Car", carSchema);

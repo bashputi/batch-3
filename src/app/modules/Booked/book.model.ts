@@ -31,7 +31,7 @@ const bookedSchema = new Schema<TBook>(
     endTime: { type: String, default: null },
     isBooked: {
       type: String,
-      enum: ["unconfirmed", "confirmed"],
+      enum: ["unconfirmed", "confirmed", "canceled"],
       default: "unconfirmed",
     },
     isDeleted: {
