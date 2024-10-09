@@ -15,7 +15,7 @@ router.post(
     validationRequest(bookedValidation.newBookedValidationSchema),
     BookedController.newBooked
 );
-router.put("/return", auth(user_role.admin), BookedController.returnBooked);
+router.put("/return", BookedController.returnBooked);
 router.get('/', auth(user_role.admin), BookedController.getAllOrders);
 router.get('/my-bookings', auth(user_role.user), BookedController.getMyOrder);
 router.delete("/:bookedId", auth(user_role.user), BookedController.deleteBooked);
