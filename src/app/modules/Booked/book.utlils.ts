@@ -1,13 +1,18 @@
 export const calculationTotalDurationTime = (
-    startTime: string,
-    endTime: string,
+    startDateTime: string,
+    endDateTime: string,
     pricePerHour: number
-): number => {
-    const [startHour, startMint] = startTime?.split(":").map(Number);
-    const startHourAndMint = startHour * 60 + startMint;
-    const [endHour, endMint] = endTime?.split(":").map(Number);
-    const endtHourAndMInt = endHour * 60 + endMint;
-    const totalDuration = (endtHourAndMInt - startHourAndMint) / 60;
-    const newTotalCost = totalDuration * pricePerHour;
-    return newTotalCost;
-};
+  ): number => {
+    const startDate = new Date(startDateTime);
+    const endDate = new Date(endDateTime);
+    if (endDate <= startDate) {
+      throw new Error("End time must be after start time");
+    }
+  
+    const duration = endDate.getTime() - startDate.getTime();
+    const durationInHours = duration / (1000 * 60 * 60);
+  
+    const totalCost = durationInHours * pricePerHour;
+  
+    return totalCost;
+  };

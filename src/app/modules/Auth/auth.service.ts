@@ -23,10 +23,10 @@ const loginUser = async (payload: TUserLogin) => {
     const user = await User.isUserExistByCustomerId(payload.email);
   
     if (!user) {
-      throw new AppError(httpStatus.NOT_EXTENDED, "This User not found");
+        throw new AppError(httpStatus.CONFLICT, "User not exists!");
     }
     if (!(await User.isPasswordMatched(payload.password, user.password))) {
-      throw new AppError(httpStatus.FORBIDDEN, "wrong password !");
+        throw new AppError(httpStatus.CONFLICT, "Wrong Password!");
     }
   
     const jwtPayload = {

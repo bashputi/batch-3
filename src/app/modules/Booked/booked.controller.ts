@@ -94,6 +94,18 @@ const cancelBooked = catchAsync(async (req, res) => {
     });
 });
 
+const carPayment = catchAsync(async (req, res) => {
+    const orderData  = req.body;
+  
+    const result = await BookedService.orderPayment(orderData);
+    sendResponce(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Payment is Successfull!",
+        data: result,
+    });
+});
+
 
 
 
@@ -105,7 +117,7 @@ export const BookedController = {
     returnBooked,
     deleteBooked,
     updateBooked,
-    cancelBooked
-
+    cancelBooked,
+    carPayment,
 
 }

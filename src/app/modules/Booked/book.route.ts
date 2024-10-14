@@ -22,5 +22,6 @@ router.delete("/:bookedId", auth(user_role.user), BookedController.deleteBooked)
 router.patch("/:bookingId", auth(user_role.admin), BookedController.updateBooked);
 router.patch("/cancel/:bookingId", auth(user_role.admin), BookedController.cancelBooked);
 
+router.post("/payment", BookedController.carPayment)
 
 export const BookedRoute = router;

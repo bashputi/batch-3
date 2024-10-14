@@ -1,0 +1,46 @@
+import axios from "axios";
+import config from "../../config";
+
+export const initialPayment = async (paymentData: any) => {
+  const {
+    transactionId,
+    totalCost,
+    customerName,
+    custormarEmail,
+    custormarPhone,
+  } = paymentData;
+  const response = await axios.post(config.payment_url!, {
+    store_id: config.store_id,
+    signature_key: config.signature_key,
+    tran_id: transactionId,
+    success_url: `${process.env.URL}/api/payment/confirmation?transactionId=${transactionId}&status=success`,
+    fail_url: `${process.env.URL}/api/payment/confirmation?status=failed`,
+    cancel_url: "http://localhost:5173/",
+    amount: totalCost,
+    currency: "BDT",
+    desc: "Merchant Registration Payment",
+    cus_name: customerName,
+    cus_email: custormarEmail,
+    cus_add1: "Road 3b",
+    cus_add2: "Faridpur sodor",
+    cus_city: "faridpur",
+    cus_state: "Dhaka",
+    cus_postcode: "6400",
+    cus_country: "Bangladesh",
+    cus_phone: custormarPhone,
+    type: "json",
+  });
+console.log(response.data)
+  return response.data;
+};
+export const varifyPayment = async (transactionId: string) => {
+  const response = await axios.get(config.payment_varifyurl!, {
+    params: {
+      store_id: config.store_id,
+      signature_key: config.signature_key,
+      type: "json",
+      request_id: transactionId,
+    },
+  });
+  return response.data;
+};

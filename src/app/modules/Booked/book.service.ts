@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 import { Car } from "../Cars/car.model";
 import { Booked } from "./book.model";
 import { calculationTotalDurationTime } from "./book.utlils";
+import { initialPayment } from "../payment/payment.utils";
 
 
 
@@ -117,6 +118,7 @@ const returnBookedIntoDB = async (id: string, payload: Record<string, unknown>) 
             endDateTime.toISOString(),
             pricePerHour
         );
+        payload.totalCost = filterTotalCost?.toFixed(2);
  
 
         const filterBooked = await Booked.findByIdAndUpdate(id, payload, {
@@ -167,6 +169,35 @@ const canceledBooked = async (id: string) => {
     return result;
 }
 
+const orderPayment = async ( payload: any) => {
+    const getPayment = payload;
+    const totalCost = getPayment.totalCost;
+
+    console.log(payload)
+
+    const transactionId = `TXN-${Date.now()}`;
+    const order = await Booked.updateOne(
+        { id: getPayment.id},
+        {
+            user: getPayment.user,
+            products: getPayment?.carId?.name,
+            totalCost,
+            status: 'Pending',
+            paymentStatus: 'Pending',
+            transactionId,
+        }
+    );
+
+    const paymentData = {
+        transactionId,
+        totalCost,
+        customerName: getPayment?.user?.name,
+        customerEmail: getPayment?.user?.email,
+        customerPhone: getPayment?.user?.phone,
+    };
+    const initialState = await initialPayment(paymentData);
+    return initialState;
+}
 
 export const BookedService = {
     newBookedIntoDB,
@@ -176,7 +207,8 @@ export const BookedService = {
     returnBookedIntoDB,
     deleteBooked,
     updateBooked,
-    canceledBooked
+    canceledBooked,
+    orderPayment
 
 
     
