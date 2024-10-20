@@ -3,7 +3,6 @@ import { varifyPayment } from "./payment.utils";
 
 
 const paymentUpdate = async (transactionId: string, status: string) => {
-  console.log(transactionId, status);
   
   const verifyResponse = await varifyPayment(transactionId);
   let result;

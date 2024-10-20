@@ -171,9 +171,10 @@ const canceledBooked = async (id: string) => {
 
 const orderPayment = async ( payload: any) => {
     const getPayment = payload;
+
     const totalCost = getPayment.totalCost;
 
-    console.log(payload)
+   
 
     const transactionId = `TXN-${Date.now()}`;
     const order = await Booked.updateOne(
@@ -195,6 +196,7 @@ const orderPayment = async ( payload: any) => {
         customerEmail: getPayment?.user?.email,
         customerPhone: getPayment?.user?.phone,
     };
+
     const initialState = await initialPayment(paymentData);
     return initialState;
 }

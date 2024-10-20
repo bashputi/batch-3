@@ -13,24 +13,24 @@ export const initialPayment = async (paymentData: any) => {
     store_id: config.store_id,
     signature_key: config.signature_key,
     tran_id: transactionId,
-    success_url: `${process.env.URL}/api/payment/confirmation?transactionId=${transactionId}&status=success`,
-    fail_url: `${process.env.URL}/api/payment/confirmation?status=failed`,
+    success_url: `${config.URL}/api/payment/confirmation?transactionId=${paymentData?.transactionId}&status=success`,
+    fail_url: `${config.URL}/api/payment/confirmation?status=failed`,
     cancel_url: "http://localhost:5173/",
     amount: totalCost,
     currency: "BDT",
     desc: "Merchant Registration Payment",
-    cus_name: customerName,
-    cus_email: custormarEmail,
+    cus_name: paymentData?.customerName,
+    cus_email: paymentData?.customerEmail,
     cus_add1: "Road 3b",
     cus_add2: "Faridpur sodor",
     cus_city: "faridpur",
     cus_state: "Dhaka",
     cus_postcode: "6400",
     cus_country: "Bangladesh",
-    cus_phone: custormarPhone,
+    cus_phone: paymentData?.customerPhone,
     type: "json",
   });
-console.log(response.data)
+
   return response.data;
 };
 export const varifyPayment = async (transactionId: string) => {
@@ -42,5 +42,6 @@ export const varifyPayment = async (transactionId: string) => {
       request_id: transactionId,
     },
   });
+  
   return response.data;
 };
