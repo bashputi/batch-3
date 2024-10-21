@@ -5,13 +5,15 @@ import { varifyPayment } from "./payment.utils";
 const paymentUpdate = async (transactionId: string, status: string) => {
   
   const verifyResponse = await varifyPayment(transactionId);
-  let result;
-  
-  if (verifyResponse && verifyResponse.pay_status === "Successful") {
-    result = await Booked.findOneAndUpdate(
-      { transactionId },
-      { paymentStatus: "Paid" }
+
+
+  if (verifyResponse && verifyResponse?.status === 200 ) {
+ 
+   const result = await Booked.findOneAndUpdate(
+      {transactionId},
+      { paymentStatus: 'Paid' }
     );
+
   }
   
   return `
@@ -25,7 +27,7 @@ const paymentUpdate = async (transactionId: string, status: string) => {
           : 'Unfortunately, your payment was not successful. Please try again or contact support.'}
       </p>
       <button style="padding: 10px 20px; background-color: ${status === 'success' ? '#4CAF50' : '#F44336'}; border: none; color: white; cursor: pointer; border-radius: 5px;">
-        <a href="http://localhost:5173/" style="color: white; text-decoration: none; font-size: 16px;">
+        <a href="https://empty-oven.surge.sh/" style="color: white; text-decoration: none; font-size: 16px;">
           Return to Home
         </a>
       </button>

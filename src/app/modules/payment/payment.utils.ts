@@ -42,6 +42,7 @@ export const varifyPayment = async (transactionId: string) => {
       request_id: transactionId,
     },
   });
-  
-  return response.data;
+
+
+  return response;
 };

@@ -171,14 +171,12 @@ const canceledBooked = async (id: string) => {
 
 const orderPayment = async ( payload: any) => {
     const getPayment = payload;
-
+    const id = getPayment._id
     const totalCost = getPayment.totalCost;
 
-   
-
     const transactionId = `TXN-${Date.now()}`;
-    const order = await Booked.updateOne(
-        { id: getPayment.id},
+    const order = await Booked.findByIdAndUpdate(
+         id,
         {
             user: getPayment.user,
             products: getPayment?.carId?.name,
@@ -188,6 +186,7 @@ const orderPayment = async ( payload: any) => {
             transactionId,
         }
     );
+   
 
     const paymentData = {
         transactionId,
